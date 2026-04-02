@@ -78,14 +78,14 @@ function FeatureCard({ feature, index }) {
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       style={{
-        rotateY,
-        rotateX,
+        rotateY: window.innerWidth > 768 ? rotateY : 0,
+        rotateX: window.innerWidth > 768 ? rotateX : 0,
         transformStyle: "preserve-3d",
       }}
-      initial={{ opacity: 0, y: 30 }}
+      initial={{ opacity: 0, y: 10 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ delay: index * 0.1, duration: 0.5 }}
+      viewport={{ once: true, margin: "-50px" }}
+      transition={{ delay: index * 0.05, duration: 0.5 }}
       className="relative h-96 w-full rounded-3xl bg-white/5 border border-white/5 p-8 group overflow-hidden"
     >
       <div

@@ -162,7 +162,7 @@ export function HowItWorks() {
                   {step.icon}
                 </div>
                 
-                <div className="flex-1 min-h-[80px]">
+                <div className="flex-1 min-h-[100px] md:min-h-[80px]">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className={cn(
                       "text-xl font-bold transition-colors duration-500",
@@ -186,7 +186,7 @@ export function HowItWorks() {
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -5 }}
                           transition={{ duration: 0.3 }}
-                          className="text-sm text-white/70 leading-relaxed font-body absolute top-0 left-0 w-full"
+                          className="text-sm text-white/70 leading-relaxed font-body md:absolute top-0 left-0 w-full"
                         >
                           {step.description}
                         </motion.p>

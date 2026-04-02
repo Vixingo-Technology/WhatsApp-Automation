@@ -49,14 +49,14 @@ export function ProblemSection() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80%] h-[80%] bg-red-500/5 blur-[150px] rounded-full pointer-events-none" />
 
       {/* Marquee */}
-      <div className="absolute top-0 left-0 right-0 border-y border-white/5 py-8 bg-black/50 backdrop-blur-sm z-10 overflow-hidden">
-        <div className="flex animate-[marquee_30s_linear_infinite] whitespace-nowrap">
+      <div className="absolute top-0 left-0 right-0 border-y border-white/5 py-4 md:py-8 bg-black/50 backdrop-blur-sm z-10 overflow-hidden">
+        <div className="flex animate-[marquee_15s_linear_infinite] md:animate-[marquee_30s_linear_infinite] whitespace-nowrap">
           {[
             "Automation • AI Replies • Lead Capture • Smart Routing • 24/7 Support",
             "Real-time Qualification • Multilingual • No-code Setup • Official API",
             "WhatsApp Business • Sales Automation • Customer Support AI",
           ].map((text, i) => (
-            <span key={i} className="text-4xl md:text-6xl font-black uppercase tracking-tighter mx-12 text-white/10">
+            <span key={i} className="text-2xl md:text-6xl font-black uppercase tracking-tighter mx-6 md:mx-12 text-white/10">
               {text}
             </span>
           ))}
@@ -65,7 +65,7 @@ export function ProblemSection() {
             "Real-time Qualification • Multilingual • No-code Setup • Official API",
             "WhatsApp Business • Sales Automation • Customer Support AI",
           ].map((text, i) => (
-            <span key={i + 'copy'} className="text-4xl md:text-6xl font-black uppercase tracking-tighter mx-12 text-white/10">
+            <span key={i + 'copy'} className="text-2xl md:text-6xl font-black uppercase tracking-tighter mx-6 md:mx-12 text-white/10">
               {text}
             </span>
           ))}
@@ -107,10 +107,10 @@ export function ProblemSection() {
           {PROBLEMS.map((problem, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: problem.delay, duration: 0.5 }}
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ delay: index * 0.05, duration: 0.5 }}
               className="glass p-8 rounded-3xl border border-white/5 group hover:border-red-400/20 transition-all duration-500"
             >
               <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-white/10 transition-all duration-500">
