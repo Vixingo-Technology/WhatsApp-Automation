@@ -75,41 +75,34 @@ function FeatureCard({ feature, index }) {
 
   return (
     <motion.div
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        rotateY: window.innerWidth > 768 ? rotateY : 0,
-        rotateX: window.innerWidth > 768 ? rotateX : 0,
-        transformStyle: "preserve-3d",
-      }}
-      initial={{ opacity: 0 }}
-      whileInView={{ opacity: 1 }}
+      initial={window.innerWidth > 768 ? { opacity: 0 } : { opacity: 1 }}
+      whileInView={window.innerWidth > 768 ? { opacity: 1 } : {}}
       viewport={{ once: true, margin: "-50px" }}
       transition={{ delay: index * 0.05, duration: 0.4 }}
-      className="relative h-96 w-full rounded-3xl bg-white/5 border border-white/5 p-8 group overflow-hidden will-change-transform"
+      className="relative h-96 w-full rounded-3xl bg-white/5 border border-white/5 p-8 group overflow-hidden"
     >
       <div
+        className="absolute inset-4 flex flex-col items-center justify-center rounded-3xl bg-[#0b1117] shadow-2xl border border-white/5 p-4 md:bg-white/[0.02] md:backdrop-blur-md md:border-white/5"
         style={{
-          transform: "translateZ(75px)",
+          transform: window.innerWidth > 768 ? "translateZ(75px)" : "none",
           transformStyle: "preserve-3d",
           backfaceVisibility: "hidden"
         }}
-        className="absolute inset-4 flex flex-col items-center justify-center rounded-3xl bg-white/[0.02] shadow-2xl backdrop-blur-md border border-white/5 p-4"
       >
         <div 
-          style={{ transform: "translateZ(50px)" }}
+          style={{ transform: window.innerWidth > 768 ? "translateZ(50px)" : "none" }}
           className="w-16 h-16 rounded-2xl bg-black/40 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-xl flex-shrink-0"
         >
           {React.cloneElement(feature.icon, { size: 32 })}
         </div>
         <h3 
-          style={{ transform: "translateZ(50px)" }}
+          style={{ transform: window.innerWidth > 768 ? "translateZ(50px)" : "none" }}
           className="text-2xl font-black mb-4 text-center tracking-tighter"
         >
           {feature.title}
         </h3>
         <p 
-          style={{ transform: "translateZ(50px)" }}
+          style={{ transform: window.innerWidth > 768 ? "translateZ(50px)" : "none" }}
           className="text-sm text-white/50 text-center font-body leading-relaxed max-w-[200px] group-hover:text-white/80 transition-colors"
         >
           {feature.description}

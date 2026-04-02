@@ -115,7 +115,7 @@ export function Hero() {
 
           {/* Floating Badges */}
           <motion.div
-            animate={{ y: [0, -10, 0] }}
+            animate={window.innerWidth > 768 ? { y: [0, -10, 0] } : {}}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
             className="absolute top-[20%] right-[10%] glass p-4 rounded-2xl flex items-center gap-3 border-whatsapp-green/20 z-30"
           >
@@ -129,7 +129,7 @@ export function Hero() {
           </motion.div>
 
           <motion.div
-            animate={{ y: [0, 10, 0] }}
+            animate={window.innerWidth > 768 ? { y: [0, 10, 0] } : {}}
             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
             className="absolute bottom-[20%] left-[5%] glass p-4 rounded-2xl flex items-center gap-3 border-whatsapp-green/20 z-30"
           >

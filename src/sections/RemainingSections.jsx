@@ -122,11 +122,11 @@ export function RemainingSections() {
             {TESTIMONIALS.map((t, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
+                initial={window.innerWidth > 768 ? { opacity: 0 } : { opacity: 1 }}
+                whileInView={window.innerWidth > 768 ? { opacity: 1 } : {}}
                 viewport={{ once: true, margin: "-20px" }}
                 transition={{ delay: i * 0.1, duration: 0.4 }}
-                className="glass p-10 rounded-[40px] border border-white/5 relative group hover:border-whatsapp-green/20 transition-all duration-500 will-change-opacity"
+                className="glass p-10 rounded-[40px] border border-white/5 relative group hover:border-whatsapp-green/20 transition-all duration-500"
               >
                 <div className="flex gap-1 mb-6">
                   {[...Array(5)].map((_, j) => <Star key={j} size={16} fill="#25D366" stroke="none" />)}

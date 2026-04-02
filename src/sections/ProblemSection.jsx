@@ -107,11 +107,11 @@ export function ProblemSection() {
           {PROBLEMS.map((problem, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
+              initial={window.innerWidth > 768 ? { opacity: 0 } : { opacity: 1 }}
+              whileInView={window.innerWidth > 768 ? { opacity: 1 } : {}}
               viewport={{ once: true, margin: "-20px" }}
               transition={{ delay: index * 0.05, duration: 0.4 }}
-              className="glass p-8 rounded-3xl border border-white/5 group hover:border-red-400/20 transition-all duration-500 will-change-opacity"
+              className="glass p-8 rounded-3xl border border-white/5 group hover:border-red-400/20 transition-all duration-500"
             >
               <div className="w-12 h-12 rounded-2xl bg-white/5 flex items-center justify-center mb-6 group-hover:scale-110 group-hover:bg-white/10 transition-all duration-500">
                 {problem.icon || <Clock />}

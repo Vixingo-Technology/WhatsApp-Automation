@@ -104,6 +104,9 @@ export function HowItWorks() {
   const [activeStep, setActiveStep] = useState(0);
 
   useEffect(() => {
+    // Only auto-switch on desktop
+    if (window.innerWidth < 1024) return;
+    
     const timer = setInterval(() => {
       setActiveStep(prev => (prev + 1) % STEPS.length);
     }, 5000);
@@ -138,11 +141,11 @@ export function HowItWorks() {
           {/* Steps List */}
           <div className="space-y-4">
             {STEPS.map((step, index) => (
-              <button
+              <div
                 key={step.id}
                 onClick={() => setActiveStep(index)}
                 className={cn(
-                  "w-full text-left p-8 rounded-3xl transition-all duration-500 flex items-start gap-6 group relative overflow-hidden",
+                  "w-full text-left p-8 rounded-3xl transition-all duration-500 flex items-start gap-6 group relative overflow-hidden cursor-pointer",
                   activeStep === index 
                     ? "bg-white/5 border border-white/10" 
                     : "hover:bg-white/[0.02] border border-transparent"
@@ -156,13 +159,13 @@ export function HowItWorks() {
                 )}
                 
                 <div className={cn(
-                  "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500",
+                  "w-12 h-12 rounded-2xl flex items-center justify-center transition-all duration-500 flex-shrink-0",
                   activeStep === index ? "bg-whatsapp-green text-black scale-110" : "bg-white/5 text-white/40 group-hover:bg-white/10"
                 )}>
                   {step.icon}
                 </div>
                 
-                <div className="flex-1 min-h-[100px] md:min-h-[80px]">
+                <div className="flex-1">
                   <div className="flex items-center justify-between mb-2">
                     <h3 className={cn(
                       "text-xl font-bold transition-colors duration-500",
@@ -178,35 +181,43 @@ export function HowItWorks() {
                     </span>
                   </div>
                   
-                  <div className="relative">
-                    <AnimatePresence mode="wait">
-                      {activeStep === index && (
-                        <motion.p
-                          initial={{ opacity: 0, y: 5 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -5 }}
-                          transition={{ duration: 0.3 }}
-                          className="text-sm text-white/70 leading-relaxed font-body md:absolute top-0 left-0 w-full"
-                        >
-                          {step.description}
-                        </motion.p>
-                      )}
-                    </AnimatePresence>
+                  {/* On mobile, we show all descriptions to prevent jumping. On desktop, we switch. */}
+                  <div className="lg:relative lg:min-h-[80px]">
+                    <div className="lg:hidden">
+                      <p className="text-sm text-white/70 leading-relaxed font-body">
+                        {step.description}
+                      </p>
+                    </div>
+                    <div className="hidden lg:block">
+                      <AnimatePresence mode="wait">
+                        {activeStep === index && (
+                          <motion.p
+                            initial={{ opacity: 0, y: 5 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            exit={{ opacity: 0, y: -5 }}
+                            transition={{ duration: 0.3 }}
+                            className="text-sm text-white/70 leading-relaxed font-body absolute top-0 left-0 w-full"
+                          >
+                            {step.description}
+                          </motion.p>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </div>
                 </div>
 
                 {activeStep === index && (
                   <motion.div
-                    className="absolute left-0 top-0 bottom-0 w-1 bg-whatsapp-green"
+                    className="absolute left-0 top-0 bottom-0 w-1 bg-whatsapp-green hidden lg:block"
                     layoutId="activeIndicator"
                   />
                 )}
-              </button>
+              </div>
             ))}
           </div>
 
           {/* Visual Side */}
-          <div className="sticky top-32 h-[500px] lg:h-[600px] rounded-[40px] glass border border-white/10 overflow-hidden group">
+          <div className="sticky top-32 h-[400px] lg:h-[600px] rounded-[40px] glass border border-white/10 overflow-hidden group hidden lg:block">
             <div className="absolute inset-0 bg-noise opacity-10 pointer-events-none" />
             
             <AnimatePresence mode="wait">

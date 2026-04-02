@@ -16,6 +16,12 @@ export function WhatsAppChat() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
+    // Only animate chat on desktop or if user is viewing it
+    if (window.innerWidth < 768) {
+      setMessages(MESSAGES.slice(0, 3));
+      return;
+    }
+    
     if (index < MESSAGES.length) {
       const timer = setTimeout(() => {
         setMessages(prev => [...prev, MESSAGES[index]]);
