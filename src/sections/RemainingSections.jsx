@@ -41,7 +41,7 @@ export function RemainingSections() {
   return (
     <>
       {/* Comparison Table */}
-      <section id="compare" className="py-32 bg-black overflow-hidden relative">
+      <section id="compare" className="py-32 overflow-hidden relative">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60%] h-[60%] bg-whatsapp-green/5 blur-[120px] rounded-full pointer-events-none" />
         
         <div className="container mx-auto px-6">
@@ -95,7 +95,7 @@ export function RemainingSections() {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="py-32 bg-black relative">
+      <section id="testimonials" className="py-32 relative">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center mb-20">
             <motion.div
@@ -150,7 +150,7 @@ export function RemainingSections() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-32 bg-black relative overflow-hidden">
+      <section className="py-32 relative overflow-hidden">
         <div className="container mx-auto px-6 relative z-10">
           <div className="max-w-6xl mx-auto glass p-12 md:p-24 rounded-[60px] border border-whatsapp-green/10 text-center relative overflow-hidden group">
             {/* Background animated gradient */}
@@ -188,7 +188,7 @@ export function RemainingSections() {
       </section>
 
       {/* Footer */}
-      <footer className="py-20 bg-black border-t border-white/5 relative z-10">
+      <footer className="py-20 border-t border-white/5 relative z-10">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
             <div className="md:col-span-2">

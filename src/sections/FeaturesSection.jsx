@@ -1,148 +1,94 @@
-import React, { useRef, useState } from 'react';
-import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { MessageSquare, Users, Globe, BarChart3, Calendar, ShieldCheck, Mail, Zap } from 'lucide-react';
+import React from 'react';
+import { motion } from 'framer-motion';
+import { MessageSquare, Users, Globe, Zap } from 'lucide-react';
 import { cn } from '../utils/cn';
 
-const FEATURES = [
+const SCROLL_FEATURES = [
   {
-    icon: <MessageSquare className="text-whatsapp-green" />,
+    icon: <MessageSquare size={32} className="text-whatsapp-green" />,
     title: "AI Auto-Reply",
-    description: "Instant responses to common questions, product inquiries, and support requests."
+    description: "Instant responses to common questions, product inquiries, and support requests. Stop losing customers to wait times."
   },
   {
-    icon: <Users className="text-blue-400" />,
+    icon: <Users size={32} className="text-whatsapp-green" />,
     title: "Lead Qualification",
-    description: "Automatically filter and score leads based on their responses and interest levels."
+    description: "Automatically filter and score leads based on their responses. Engage only with the highest intent prospects."
   },
   {
-    icon: <Globe className="text-purple-400" />,
+    icon: <Globe size={32} className="text-whatsapp-green" />,
     title: "Multilingual Support",
-    description: "Our AI speaks 50+ languages fluently, catering to your global customer base."
+    description: "Fluid conversations in over 50 languages. The AI detects the language and responds natively."
   },
   {
-    icon: <Calendar className="text-amber-400" />,
-    title: "Auto-Booking",
-    description: "Seamlessly integrate with Google Calendar or Calendly to book appointments in-chat."
-  },
-  {
-    icon: <BarChart3 className="text-red-400" />,
-    title: "Real-time Analytics",
-    description: "Deep insights into conversation volumes, response times, and conversion funnels."
-  },
-  {
-    icon: <ShieldCheck className="text-emerald-400" />,
-    title: "Official Meta API",
-    description: "100% compliant with WhatsApp's policies. Zero risk of account bans."
-  },
-  {
-    icon: <Mail className="text-indigo-400" />,
-    title: "Email Follow-ups",
-    description: "Trigger automated email sequences based on WhatsApp chat outcomes."
-  },
-  {
-    icon: <Zap className="text-yellow-400" />,
-    title: "Smart Escalation",
-    description: "Intelligently hand over complex queries to your human team when needed."
+    icon: <Zap size={32} className="text-whatsapp-green" />,
+    title: "Hyper-Personalization",
+    description: "Connects with your CRM to remember past interactions and personalize every single automated message."
   }
 ];
 
-function FeatureCard({ feature, index }) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-
-  const mouseXSpring = useSpring(x);
-  const mouseYSpring = useSpring(y);
-
-  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["17.5deg", "-17.5deg"]);
-  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-17.5deg", "17.5deg"]);
-
-  const handleMouseMove = (e) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
-    const mouseX = e.clientX - rect.left;
-    const mouseY = e.clientY - rect.top;
-    const xPct = mouseX / width - 0.5;
-    const yPct = mouseY / height - 0.5;
-    x.set(xPct);
-    y.set(yPct);
-  };
-
-  const handleMouseLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
+function ScrollFeatureBlock({ feature, index }) {
+  // A tall block so the user has to scroll, triggering the 3D icon in the background Canvas
   return (
-    <motion.div
-      initial={window.innerWidth > 768 ? { opacity: 0 } : { opacity: 1 }}
-      whileInView={window.innerWidth > 768 ? { opacity: 1 } : {}}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ delay: index * 0.05, duration: 0.4 }}
-      className="relative h-96 w-full rounded-3xl bg-white/5 border border-white/5 p-8 group overflow-hidden"
-    >
-      <div
-        className="absolute inset-4 flex flex-col items-center justify-center rounded-3xl bg-[#0b1117] shadow-2xl border border-white/5 p-4 md:bg-white/[0.02] md:backdrop-blur-md md:border-white/5"
-        style={{
-          transform: window.innerWidth > 768 ? "translateZ(75px)" : "none",
-          transformStyle: "preserve-3d",
-          backfaceVisibility: "hidden"
-        }}
-      >
-        <div 
-          style={{ transform: window.innerWidth > 768 ? "translateZ(50px)" : "none" }}
-          className="w-16 h-16 rounded-2xl bg-black/40 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 shadow-xl flex-shrink-0"
+    <div className="min-h-[80vh] flex items-center w-full">
+      <div className={cn(
+        "w-full lg:w-1/2 flex flex-col justify-center",
+        index % 2 === 0 ? "lg:pr-20 ml-auto text-right items-end" : "lg:pl-20 mr-auto text-left items-start"
+      )}>
+        <motion.div
+           initial={{ opacity: 0, y: 50 }}
+           whileInView={{ opacity: 1, y: 0 }}
+           viewport={{ once: false, margin: "-200px" }}
+           transition={{ duration: 0.6 }}
+           className="glass-card p-10 max-w-lg"
         >
-          {React.cloneElement(feature.icon, { size: 32 })}
-        </div>
-        <h3 
-          style={{ transform: window.innerWidth > 768 ? "translateZ(50px)" : "none" }}
-          className="text-2xl font-black mb-4 text-center tracking-tighter"
-        >
-          {feature.title}
-        </h3>
-        <p 
-          style={{ transform: window.innerWidth > 768 ? "translateZ(50px)" : "none" }}
-          className="text-sm text-white/50 text-center font-body leading-relaxed max-w-[200px] group-hover:text-white/80 transition-colors"
-        >
-          {feature.description}
-        </p>
+          <div className="w-16 h-16 rounded-2xl bg-[#0b1117] flex items-center justify-center mb-6 shadow-xl border border-white/5">
+            {feature.icon}
+          </div>
+          <h3 className="text-3xl md:text-5xl font-black mb-4 tracking-tighter text-white">
+            {feature.title}
+          </h3>
+          <p className="text-lg text-white/60 font-body leading-relaxed">
+            {feature.description}
+          </p>
+        </motion.div>
       </div>
-      
-      {/* Background glow */}
-      <div className="absolute top-0 left-0 right-0 bottom-0 bg-gradient-to-br from-whatsapp-green/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-    </motion.div>
+    </div>
   );
 }
 
 export function FeaturesSection() {
   return (
-    <section id="features" className="py-32 bg-black overflow-hidden">
-      <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto text-center mb-20">
+    <section id="features" className="relative py-32 overflow-visible">
+      <div className="container mx-auto px-6 relative z-10">
+        
+        {/* Title */}
+        <div className="max-w-4xl mx-auto text-center mb-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block px-3 py-1.5 rounded-full glass mb-6 border-whatsapp-green/20"
+            className="inline-block px-4 py-2 rounded-full glass mb-6 border-whatsapp-green/20"
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-whatsapp-green">The Capabilities</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-[#f0f4f8]">The Engine</span>
           </motion.div>
           
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-7xl font-black mb-8 leading-[1] tracking-tighter text-gradient"
+            className="text-4xl md:text-7xl font-black leading-[1] tracking-tighter text-white"
           >
-            Intelligence at <br />
-            <span className="text-whatsapp-green italic">Every Level</span>
+            Intelligence that <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-whatsapp-green to-white">
+              Scales
+            </span>
           </motion.h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {FEATURES.map((feature, index) => (
-            <FeatureCard key={index} feature={feature} index={index} />
+        {/* The tall scrolling container where 3D objects will appear globally */}
+        <div className="flex flex-col relative w-full pt-10 pb-32">
+          {SCROLL_FEATURES.map((feature, index) => (
+            <ScrollFeatureBlock key={index} feature={feature} index={index} />
           ))}
         </div>
       </div>

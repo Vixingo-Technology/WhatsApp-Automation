@@ -114,7 +114,7 @@ export function HowItWorks() {
   }, []);
 
   return (
-    <section id="how-it-works" className="py-32 bg-black overflow-hidden">
+    <section id="how-it-works" className="py-32 overflow-hidden">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto text-center mb-20">
           <motion.div

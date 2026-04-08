@@ -18,6 +18,7 @@ export function WhatsAppChat() {
   useEffect(() => {
     // Only animate chat on desktop or if user is viewing it
     if (window.innerWidth < 768) {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
       setMessages(MESSAGES.slice(0, 3));
       return;
     }

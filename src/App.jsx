@@ -1,11 +1,17 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 import { motion, useScroll, useSpring } from 'framer-motion';
+import { Canvas } from '@react-three/fiber';
+import { Scene } from './components/Scene';
+
 import { Navbar } from './components/Navbar';
 import { Hero } from './sections/Hero';
+import { FeaturesSection } from './sections/FeaturesSection';
+
+// Simplify remaining sections into placeholders for the scrolling space, 
+// since we will integrate the 3D features section primarily.
 import { ProblemSection } from './sections/ProblemSection';
 import { HowItWorks } from './sections/HowItWorks';
-import { FeaturesSection } from './sections/FeaturesSection';
 import { ImmersiveBreak } from './sections/ImmersiveBreak';
 import { RemainingSections } from './sections/RemainingSections';
 
@@ -43,57 +49,35 @@ function App() {
   }, []);
 
   return (
-    <main className="bg-black min-h-screen selection:bg-whatsapp-green selection:text-black">
-      {/* Custom Cursor (Optional but requested) */}
-      <CustomCursor />
-      
+    <main className="selection:bg-whatsapp-green selection:text-black">
+      {/* 3D Global Canvas Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <Canvas camera={{ position: [0, 0, 10], fov: 35 }}>
+          <Scene />
+        </Canvas>
+      </div>
+
       {/* Progress Bar */}
       <motion.div
         className="fixed top-0 left-0 right-0 h-1 bg-whatsapp-green z-[110] origin-left"
         style={{ scaleX }}
       />
 
-      {/* Grain Overlay */}
-      <div className="grain-overlay" />
+      {/* DOM Layer overlaid on top of 3D Canvas */}
+      <div className="relative z-10 w-full">
+        {/* Navigation */}
+        <Navbar />
 
-      {/* Navigation */}
-      <Navbar />
-
-      {/* Sections */}
-      <Hero />
-      <ProblemSection />
-      <HowItWorks />
-      <FeaturesSection />
-      <ImmersiveBreak />
-      <RemainingSections />
+        {/* Sections */}
+        <Hero />
+        <ProblemSection />
+        <HowItWorks />
+        {/* FeaturesSection will be where the 3D scroll objects appear alongside DOM content */}
+        <FeaturesSection />
+        <ImmersiveBreak />
+        <RemainingSections />
+      </div>
     </main>
-  );
-}
-
-function CustomCursor() {
-  const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
-  const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
-
-  useEffect(() => {
-    const moveCursor = (e) => {
-      cursorX.set(e.clientX - 16);
-      cursorY.set(e.clientY - 16);
-    };
-
-    window.addEventListener('mousemove', moveCursor);
-    return () => window.removeEventListener('mousemove', moveCursor);
-  }, []);
-
-  return (
-    <motion.div
-      className="fixed top-0 left-0 w-8 h-8 rounded-full border border-whatsapp-green pointer-events-none z-[9999] hidden md:block mix-blend-difference"
-      style={{
-        x: cursorX,
-        y: cursorY,
-      }}
-    >
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-whatsapp-green rounded-full" />
-    </motion.div>
   );
 }
 
