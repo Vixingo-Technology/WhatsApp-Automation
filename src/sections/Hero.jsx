@@ -3,8 +3,8 @@ import { motion, useScroll, useTransform } from 'framer-motion';
 import { WhatsAppChat } from '../components/WhatsAppChat';
 import { ArrowRight, Clock, TrendingUp } from 'lucide-react';
 
-export function Hero() {
-  const { scrollY } = useScroll();
+export function Hero({ containerRef }) {
+  const { scrollY } = useScroll({ container: containerRef });
   // Parallax effects
   const yText = useTransform(scrollY, [0, 1000], [0, 200]);
   const yImage = useTransform(scrollY, [0, 1000], [0, 100]);

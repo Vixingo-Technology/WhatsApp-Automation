@@ -1,18 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, useScroll, useMotionValueEvent } from 'framer-motion';
 import { cn } from '../utils/cn';
 
-export function Navbar() {
+export function Navbar({ containerRef }) {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { scrollY } = useScroll();
+  const { scrollY } = useScroll({ container: containerRef });
 
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setIsScrolled(latest > 50);
+  });
 
   return (
     <motion.nav
