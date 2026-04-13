@@ -1,97 +1,136 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Send, CheckCheck } from 'lucide-react';
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Send, CheckCheck } from "lucide-react";
+
+const MESSAGE_TIME = "10:30 AM";
 
 interface Message {
-  id: number;
-  type: string;
-  text: string;
-  delay: number;
+    id: number;
+    type: string;
+    text: string;
+    delay: number;
 }
 
 const MESSAGES: Message[] = [
-  { id: 1, type: 'in', text: "Hi, I'm interested in your real estate project. Is it still available?", delay: 1000 },
-  { id: 2, type: 'out', text: "Hello! Yes, the project is available. Our AI Agent can help you with details. Would you like to see the brochure?", delay: 2000 },
-  { id: 3, type: 'in', text: "Yes, please! Also, what's the starting price?", delay: 1500 },
-  { id: 4, type: 'out', text: "The starting price is $250k. I've sent the brochure to your email. Would you like to book a site visit for tomorrow?", delay: 2500 },
-  { id: 5, type: 'in', text: "That sounds great! Tomorrow at 4 PM?", delay: 1200 },
-  { id: 6, type: 'out', text: "Perfect! Your visit is scheduled for tomorrow at 4 PM. I'll send you a reminder 1 hour before.", delay: 2000 },
+    {
+        id: 1,
+        type: "in",
+        text: "Hi, I'm interested in your real estate project. Is it still available?",
+        delay: 1000,
+    },
+    {
+        id: 2,
+        type: "out",
+        text: "Hello! Yes, the project is available. Our AI Agent can help you with details. Would you like to see the brochure?",
+        delay: 2000,
+    },
+    {
+        id: 3,
+        type: "in",
+        text: "Yes, please! Also, what's the starting price?",
+        delay: 1500,
+    },
+    {
+        id: 4,
+        type: "out",
+        text: "The starting price is $250k. I've sent the brochure to your email. Would you like to book a site visit for tomorrow?",
+        delay: 2500,
+    },
+    {
+        id: 5,
+        type: "in",
+        text: "That sounds great! Tomorrow at 4 PM?",
+        delay: 1200,
+    },
+    {
+        id: 6,
+        type: "out",
+        text: "Perfect! Your visit is scheduled for tomorrow at 4 PM. I'll send you a reminder 1 hour before.",
+        delay: 2000,
+    },
 ];
 
 export function WhatsAppChat() {
-  const [messages, setMessages] = useState<Message[]>([]);
-  const [index, setIndex] = useState(0);
+    const [messages, setMessages] = useState<Message[]>([]);
+    const [index, setIndex] = useState(0);
 
-  useEffect(() => {
-    // Only animate chat on desktop or if user is viewing it
-    if (window.innerWidth < 768) {
-      // eslint-disable-next-line react-hooks/exhaustive-deps
-      setMessages(MESSAGES.slice(0, 3));
-      return;
-    }
-    
-    if (index < MESSAGES.length) {
-      const timer = setTimeout(() => {
-        setMessages(prev => [...prev, MESSAGES[index]]);
-        setIndex(prev => prev + 1);
-      }, MESSAGES[index].delay);
-      return () => clearTimeout(timer);
-    } else {
-      const resetTimer = setTimeout(() => {
-        setMessages([]);
-        setIndex(0);
-      }, 5000);
-      return () => clearTimeout(resetTimer);
-    }
-  }, [index]);
+    useEffect(() => {
+        // Only animate chat on desktop or if user is viewing it
+        if (window.innerWidth < 768) {
+            // eslint-disable-next-line react-hooks/exhaustive-deps
+            setMessages(MESSAGES.slice(0, 3));
+            return;
+        }
 
-  return (
-    <div className="flex flex-col h-full bg-[#efeae2] rounded-[24px] overflow-hidden border border-slate-200 shadow-xl">
-      {/* Header */}
-      <div className="bg-[#128C7E] p-4 flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold text-white">V</div>
-        <div>
-          <h4 className="text-white text-sm font-bold">Vixingo AI</h4>
-          <p className="text-white/70 text-[10px]">Online</p>
+        if (index < MESSAGES.length) {
+            const timer = setTimeout(() => {
+                setMessages((prev) => [...prev, MESSAGES[index]]);
+                setIndex((prev) => prev + 1);
+            }, MESSAGES[index].delay);
+            return () => clearTimeout(timer);
+        } else {
+            const resetTimer = setTimeout(() => {
+                setMessages([]);
+                setIndex(0);
+            }, 5000);
+            return () => clearTimeout(resetTimer);
+        }
+    }, [index]);
+
+    return (
+        <div className="flex flex-col h-full bg-[#efeae2] rounded-3xl overflow-hidden border border-slate-200 shadow-xl">
+            {/* Header */}
+            <div className="bg-whatsapp-green-dim p-4 flex items-center gap-3">
+                <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold text-white">
+                    V
+                </div>
+                <div>
+                    <h4 className="text-white text-sm font-bold">Vixingo AI</h4>
+                    <p className="text-white/70 text-[10px]">Online</p>
+                </div>
+            </div>
+
+            {/* Messages */}
+            <div className="flex-1 p-4 space-y-3 overflow-y-auto scrollbar-hide flex flex-col">
+                <AnimatePresence>
+                    {messages.map((m) => (
+                        <motion.div
+                            key={m.id}
+                            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.95 }}
+                            className={`max-w-[85%] p-2.5 rounded-xl text-[11px] relative shadow-sm ${
+                                m.type === "in"
+                                    ? "bg-white text-slate-800 self-start rounded-tl-none"
+                                    : "bg-[#dcf8c6] text-slate-800 self-end rounded-tr-none"
+                            }`}
+                        >
+                            {m.text}
+                            <div className="flex justify-end items-center gap-1 mt-1">
+                                <span className="text-[8px] opacity-50">
+                                    {MESSAGE_TIME}
+                                </span>
+                                {m.type === "out" && (
+                                    <CheckCheck
+                                        size={10}
+                                        className="text-[#34b7f1]"
+                                    />
+                                )}
+                            </div>
+                        </motion.div>
+                    ))}
+                </AnimatePresence>
+            </div>
+
+            {/* Input */}
+            <div className="p-3 bg-[#f0f2f5] flex items-center gap-2 border-t border-slate-200">
+                <div className="flex-1 h-8 bg-white rounded-full px-4 flex items-center text-[10px] text-slate-600">
+                    Type a message
+                </div>
+                <div className="w-8 h-8 rounded-full bg-whatsapp-green-dim flex items-center justify-center text-white">
+                    <Send size={14} />
+                </div>
+            </div>
         </div>
-      </div>
-
-      {/* Messages */}
-      <div className="flex-1 p-4 space-y-3 overflow-y-auto scrollbar-hide flex flex-col">
-        <AnimatePresence>
-          {messages.map((m) => (
-            <motion.div
-              key={m.id}
-              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              className={`max-w-[85%] p-2.5 rounded-xl text-[11px] relative shadow-sm ${
-                m.type === 'in' 
-                  ? 'bg-white text-slate-800 self-start rounded-tl-none' 
-                  : 'bg-[#dcf8c6] text-slate-800 self-end rounded-tr-none'
-              }`}
-            >
-              {m.text}
-              <div className="flex justify-end items-center gap-1 mt-1">
-                <span className="text-[8px] opacity-50">
-                  {new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </span>
-                {m.type === 'out' && <CheckCheck size={10} className="text-[#34b7f1]" />}
-              </div>
-            </motion.div>
-          ))}
-        </AnimatePresence>
-      </div>
-
-      {/* Input */}
-      <div className="p-3 bg-[#f0f2f5] flex items-center gap-2 border-t border-slate-200">
-        <div className="flex-1 h-8 bg-white rounded-full px-4 flex items-center text-[10px] text-slate-600">
-          Type a message
-        </div>
-        <div className="w-8 h-8 rounded-full bg-[#128C7E] flex items-center justify-center text-white">
-          <Send size={14} />
-        </div>
-      </div>
-    </div>
-  );
+    );
 }
