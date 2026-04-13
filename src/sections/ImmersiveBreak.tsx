@@ -11,14 +11,14 @@ export function ImmersiveBreak() {
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 1, ease: "easeOut" }}
-          className="max-w-4xl mx-auto glass-card p-12 lg:p-24"
+          className="max-w-4xl mx-auto glass-card p-12 lg:p-24 bg-white/40 border-slate-200"
           style={{ pointerEvents: 'auto' }}
         >
-          <h2 className="text-6xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tighter text-white">
+          <h2 className="text-6xl md:text-9xl font-black mb-8 leading-[0.9] tracking-tighter text-slate-900">
             The Future of <br />
             <span className="text-whatsapp-green italic">Conversation</span>
           </h2>
-          <p className="text-xl text-white/60 max-w-2xl mx-auto font-body leading-relaxed">
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto font-body leading-relaxed">
             Not just another chatbot. A fully autonomous AI agent that lives on WhatsApp, 
             understands your business, and grows your revenue while you sleep.
           </p>

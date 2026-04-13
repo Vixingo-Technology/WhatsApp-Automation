@@ -2,7 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, CheckCheck } from 'lucide-react';
 
-const MESSAGES = [
+interface Message {
+  id: number;
+  type: string;
+  text: string;
+  delay: number;
+}
+
+const MESSAGES: Message[] = [
   { id: 1, type: 'in', text: "Hi, I'm interested in your real estate project. Is it still available?", delay: 1000 },
   { id: 2, type: 'out', text: "Hello! Yes, the project is available. Our AI Agent can help you with details. Would you like to see the brochure?", delay: 2000 },
   { id: 3, type: 'in', text: "Yes, please! Also, what's the starting price?", delay: 1500 },
@@ -12,7 +19,7 @@ const MESSAGES = [
 ];
 
 export function WhatsAppChat() {
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
@@ -39,7 +46,7 @@ export function WhatsAppChat() {
   }, [index]);
 
   return (
-    <div className="flex flex-col h-full bg-[#0a0a0a] rounded-[24px] overflow-hidden border border-white/5 shadow-2xl">
+    <div className="flex flex-col h-full bg-[#efeae2] rounded-[24px] overflow-hidden border border-slate-200 shadow-xl">
       {/* Header */}
       <div className="bg-[#128C7E] p-4 flex items-center gap-3">
         <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center text-xs font-bold text-white">V</div>
@@ -58,10 +65,10 @@ export function WhatsAppChat() {
               initial={{ opacity: 0, y: 10, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className={`max-w-[85%] p-2.5 rounded-xl text-[11px] relative ${
+              className={`max-w-[85%] p-2.5 rounded-xl text-[11px] relative shadow-sm ${
                 m.type === 'in' 
-                  ? 'bg-[#1f1f1f] text-white self-start rounded-tl-none' 
-                  : 'bg-[#056162] text-white self-end rounded-tr-none'
+                  ? 'bg-white text-slate-800 self-start rounded-tl-none' 
+                  : 'bg-[#dcf8c6] text-slate-800 self-end rounded-tr-none'
               }`}
             >
               {m.text}
@@ -77,8 +84,8 @@ export function WhatsAppChat() {
       </div>
 
       {/* Input */}
-      <div className="p-3 bg-[#1f1f1f] flex items-center gap-2">
-        <div className="flex-1 h-8 bg-[#2a2a2a] rounded-full px-4 flex items-center text-[10px] text-white/40">
+      <div className="p-3 bg-[#f0f2f5] flex items-center gap-2 border-t border-slate-200">
+        <div className="flex-1 h-8 bg-white rounded-full px-4 flex items-center text-[10px] text-slate-600">
           Type a message
         </div>
         <div className="w-8 h-8 rounded-full bg-[#128C7E] flex items-center justify-center text-white">

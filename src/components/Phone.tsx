@@ -3,8 +3,12 @@ import { useFrame } from '@react-three/fiber';
 import { RoundedBox, Float, MeshDistortMaterial } from '@react-three/drei';
 import * as THREE from 'three';
 
-export function Phone({ mouse }) {
-  const meshRef = useRef();
+interface PhoneProps {
+  mouse: { x: number; y: number };
+}
+
+export function Phone({ mouse }: PhoneProps) {
+  const meshRef = useRef<THREE.Group>(null);
   
   useFrame((state) => {
     if (!meshRef.current) return;

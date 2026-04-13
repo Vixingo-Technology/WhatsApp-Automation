@@ -1,19 +1,22 @@
+"use client";
+
 import React, { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 import { motion, useScroll, useSpring, useVelocity, useTransform, useMotionTemplate } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
-import { Scene } from './components/Scene';
+import BackgroundScene from '../components/BackgroundScene';
 
-import { Navbar } from './components/Navbar';
-import { Hero } from './sections/Hero';
-import { FeaturesSection } from './sections/FeaturesSection';
-import { ProblemSection } from './sections/ProblemSection';
-import { HowItWorks } from './sections/HowItWorks';
-import { ImmersiveBreak } from './sections/ImmersiveBreak';
-import { RemainingSections } from './sections/RemainingSections';
+import { Navbar } from '../components/Navbar';
+import { Hero } from '../sections/Hero';
+import { FeaturesSection } from '../sections/FeaturesSection';
+import { ProblemSection } from '../sections/ProblemSection';
+import { HowItWorks } from '../sections/HowItWorks';
+import { ImmersiveBreak } from '../sections/ImmersiveBreak';
+import { RemainingSections } from '../sections/RemainingSections';
+import Blast from '../sections/Blast';
 
-function App() {
-  const wrapperRef = useRef(null);
+export default function Page() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   const { scrollY, scrollYProgress } = useScroll({ container: wrapperRef });
   const scaleX = useSpring(scrollYProgress, {
@@ -21,8 +24,6 @@ function App() {
     damping: 30,
     restDelta: 0.001
   });
-
-
 
   useEffect(() => {
     // Disable native body scroll as we are using a custom wrapper
@@ -32,19 +33,17 @@ function App() {
 
     const lenis = new Lenis({
       wrapper: wrapperRef.current,
-      content: wrapperRef.current.firstElementChild,
+      content: wrapperRef.current.firstElementChild as HTMLElement,
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       orientation: 'vertical',
       gestureOrientation: 'vertical',
       smoothWheel: true,
       wheelMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
       infinite: false,
     });
 
-    function raf(time) {
+    function raf(time: number) {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
@@ -58,11 +57,11 @@ function App() {
   }, []);
 
   return (
-    <main className="selection:bg-whatsapp-green selection:text-black min-h-screen bg-black">
+    <main className="selection:bg-whatsapp-green selection:text-black min-h-screen bg-transparent">
       {/* 3D Global Canvas Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <Canvas camera={{ position: [0, 0, 10], fov: 35 }}>
-          <Scene />
+          <BackgroundScene scrollYProgress={scrollYProgress} scrollY={scrollY} />
         </Canvas>
       </div>
 
@@ -76,7 +75,7 @@ function App() {
       <div className="fixed inset-0 z-10 w-full h-full pointer-events-auto">
         <div
           ref={wrapperRef}
-          className="w-full h-full overflow-y-auto"
+          className="w-full h-full overflow-y-auto relative"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none', perspective: '1200px' }}
         >
           {/* Hide native scrollbars to maintain immersion */}
@@ -89,7 +88,8 @@ function App() {
 
             {/* Sections */}
             <Hero containerRef={wrapperRef} />
-            <ProblemSection />
+            <Blast containerRef={wrapperRef} />
+            <ProblemSection containerRef={wrapperRef} />
             <HowItWorks containerRef={wrapperRef} />
             <FeaturesSection />
             <ImmersiveBreak />
@@ -100,5 +100,3 @@ function App() {
     </main>
   );
 }
-
-export default App;

@@ -3,7 +3,13 @@ import { motion } from 'framer-motion';
 import { MessageSquare, Users, Globe, Zap } from 'lucide-react';
 import { cn } from '../utils/cn';
 
-const SCROLL_FEATURES = [
+interface Feature {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+}
+
+const SCROLL_FEATURES: Feature[] = [
   {
     icon: <MessageSquare size={32} className="text-whatsapp-green" />,
     title: "AI Auto-Reply",
@@ -26,7 +32,7 @@ const SCROLL_FEATURES = [
   }
 ];
 
-function ScrollFeatureBlock({ feature, index }) {
+function ScrollFeatureBlock({ feature, index }: { feature: Feature; index: number }) {
   // A tall block so the user has to scroll, triggering the 3D icon in the background Canvas
   return (
     <div className="min-h-[80vh] flex items-center w-full">
@@ -39,15 +45,15 @@ function ScrollFeatureBlock({ feature, index }) {
            whileInView={{ opacity: 1, y: 0 }}
            viewport={{ once: false, margin: "-200px" }}
            transition={{ duration: 0.6 }}
-           className="glass-card p-10 max-w-lg"
+           className="glass-card p-10 max-w-lg bg-white/40 border-slate-200"
         >
-          <div className="w-16 h-16 rounded-2xl bg-[#0b1117] flex items-center justify-center mb-6 shadow-xl border border-white/5">
+          <div className="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center mb-6 shadow-xl border border-white/5">
             {feature.icon}
           </div>
-          <h3 className="text-3xl md:text-5xl font-black mb-4 tracking-tighter text-white">
+          <h3 className="text-3xl md:text-5xl font-black mb-4 tracking-tighter text-slate-900">
             {feature.title}
           </h3>
-          <p className="text-lg text-white/60 font-body leading-relaxed">
+          <p className="text-lg text-slate-600 font-body leading-relaxed">
             {feature.description}
           </p>
         </motion.div>
@@ -57,6 +63,7 @@ function ScrollFeatureBlock({ feature, index }) {
 }
 
 export function FeaturesSection() {
+  // Features Section component
   return (
     <section id="features" className="relative py-32 overflow-visible">
       <div className="container mx-auto px-6 relative z-10">
@@ -67,19 +74,19 @@ export function FeaturesSection() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="inline-block px-4 py-2 rounded-full glass mb-6 border-whatsapp-green/20"
+            className="inline-block px-4 py-2 rounded-full glass mb-6 border-slate-200"
           >
-            <span className="text-xs font-bold uppercase tracking-widest text-[#f0f4f8]">The Engine</span>
+            <span className="text-xs font-bold uppercase tracking-widest text-slate-500">The Engine</span>
           </motion.div>
           
           <motion.h2
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="text-4xl md:text-7xl font-black leading-[1] tracking-tighter text-white"
+            className="text-4xl md:text-7xl font-black leading-[1] tracking-tighter text-slate-900"
           >
             Intelligence that <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-whatsapp-green to-white">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-whatsapp-green to-slate-900">
               Scales
             </span>
           </motion.h2>

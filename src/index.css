@@ -3,10 +3,10 @@
 @theme {
   --color-whatsapp-green: #25D366;
   --color-whatsapp-green-dim: #128C7E;
-  --color-bg-dark: #050505;
-  --color-bg-card: rgba(11, 17, 23, 0.4);
-  --font-display: 'Outfit', sans-serif;
-  --font-body: 'Inter', sans-serif;
+  --color-bg-light: #ffffff;
+  --color-bg-card: rgba(255, 255, 255, 0.8);
+  --font-display: var(--font-outfit), 'Outfit', sans-serif;
+  --font-body: var(--font-inter), 'Inter', sans-serif;
   
   --animate-marquee: marquee 30s linear infinite;
   
@@ -36,13 +36,13 @@
   :root {
     --green: #25D366;
     --green-dim: #128C7E;
-    --bg: #050505;
-    --text: #f0f4f8;
-    --text-muted: rgba(240, 244, 248, 0.5);
+    --bg: #ffffff;
+    --text: #0f172a;
+    --text-muted: rgba(15, 23, 42, 0.6);
   }
 
   body {
-    @apply bg-bg-dark text-[#f0f4f8] font-body overflow-x-hidden antialiased leading-relaxed tracking-[-0.01em];
+    @apply bg-[var(--bg)] text-[var(--text)] font-body overflow-x-hidden antialiased leading-relaxed tracking-[-0.01em];
     /* Critical for overlay R3F */
     margin: 0;
     padding: 0;
@@ -56,17 +56,17 @@
 /* Utilities */
 @layer utilities {
   .glass {
-    @apply bg-white/[0.02] backdrop-blur-[20px] border border-white/[0.08] will-change-[backdrop-filter,opacity];
-    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    @apply bg-white/60 backdrop-blur-[20px] border border-slate-200/50 will-change-[backdrop-filter,opacity];
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
   }
 
   .glass-card {
-    @apply bg-[#0b1117]/60 backdrop-blur-xl border border-whatsapp-green/20 hover:border-whatsapp-green/50 transition-colors duration-500 rounded-3xl;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    @apply bg-white/80 backdrop-blur-xl border border-slate-200 hover:border-whatsapp-green/40 transition-colors duration-500 rounded-3xl;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
   }
 
   .text-gradient {
-    @apply bg-gradient-to-b from-white to-white/50 bg-clip-text text-transparent;
+    @apply bg-gradient-to-b from-slate-800 to-slate-500 bg-clip-text text-transparent;
   }
 
   .green-gradient {
