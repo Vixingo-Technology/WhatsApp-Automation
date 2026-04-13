@@ -100,78 +100,84 @@ const AnimationCanvas = ({
     const eyeX = useSpring(mouseX, { stiffness: 200, damping: 20 });
     const eyeY = useSpring(mouseY, { stiffness: 200, damping: 20 });
 
+    const smoothProgress = useSpring(scrollYProgress, {
+        stiffness: 80,
+        damping: 25,
+        restDelta: 0.0001,
+    });
+
     const headRotateX = useTransform(mouseY, (v) => -v * 0.8);
     const headRotateY = useTransform(mouseX, (v) => v * 0.8);
 
     // --- SCRUB THEATER MAPPINGS (0 to 1 over 400vh) ---
 
     // Robot global movement
-    const robotRotate = useTransform(scrollYProgress, [0, 0.1], [90, 0]);
+    const robotRotate = useTransform(smoothProgress, [0, 0.1], [90, 0]);
     const robotGlow = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0, 0.05],
         ["rgba(0,0,0,0)", "rgba(37,211,102,0.8)"],
     );
-    const robotOpacity = useTransform(scrollYProgress, [0, 0.1], [0.5, 1]);
+    const robotOpacity = useTransform(smoothProgress, [0, 0.1], [0.5, 1]);
     const RobotY = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0, 0.1, 0.35, 0.45, 0.6, 0.65, 0.85, 0.95],
         [200, 0, 0, -150, -150, 0, 0, -250],
     );
     const RobotX = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.65, 0.7, 0.75, 0.8, 0.85, 0.95],
         [0, -150, 150, 0, 0, 350],
     );
 
     // Eyes Visibility (Alive state)
-    const isAlive = useTransform(scrollYProgress, [0.1, 0.12], [0, 1]);
+    const isAlive = useTransform(smoothProgress, [0.1, 0.12], [0, 1]);
 
     // Step 1: WhatsApp Connect
-    const waX = useTransform(scrollYProgress, [0, 0.1], [-500, -30]);
-    const waY = useTransform(scrollYProgress, [0, 0.1], [-200, -20]);
+    const waX = useTransform(smoothProgress, [0, 0.1], [-500, -30]);
+    const waY = useTransform(smoothProgress, [0, 0.1], [-200, -20]);
     const waScale = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.08, 0.1, 0.12],
         [1, 1.5, 0],
     );
 
     // Step 2: Floating Pages learning the logic
     const p1Y = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.15, 0.18, 0.22, 0.25],
         [300, -150, -150, -300],
     );
     const p1Scale = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.15, 0.18, 0.22, 0.25],
         [0, 1, 1, 0],
     );
 
     const p2Y = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.18, 0.21, 0.25, 0.28],
         [300, -150, -150, -300],
     );
     const p2Scale = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.18, 0.21, 0.25, 0.28],
         [0, 1, 1, 0],
     );
 
     const p3Y = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.21, 0.24, 0.28, 0.31],
         [300, -150, -150, -300],
     );
     const p3Scale = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.21, 0.24, 0.28, 0.31],
         [0, 1, 1, 0],
     );
 
     const jetpackScale = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.32, 0.35, 0.85, 0.9],
         [0, 1, 1, 1],
     );
@@ -181,34 +187,34 @@ const AnimationCanvas = ({
     const isRedFlames = activeStep >= 3;
 
     // Step 4: Machine Order/Booking Data Input
-    const machineY = useTransform(scrollYProgress, [0.6, 0.7], [500, 200]);
-    const machineOpacity = useTransform(scrollYProgress, [0.6, 0.7], [0, 1]);
+    const machineY = useTransform(smoothProgress, [0.6, 0.7], [500, 200]);
+    const machineOpacity = useTransform(smoothProgress, [0.6, 0.7], [0, 1]);
 
-    const chat1X = useTransform(scrollYProgress, [0.7, 0.74], [0, -250]);
-    const chat1Y = useTransform(scrollYProgress, [0.7, 0.74], [0, 150]);
+    const chat1X = useTransform(smoothProgress, [0.7, 0.74], [0, -250]);
+    const chat1Y = useTransform(smoothProgress, [0.7, 0.74], [0, 150]);
     const chat1Op = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.69, 0.7, 0.73, 0.74],
         [0, 1, 1, 0],
     );
 
-    const chat2X = useTransform(scrollYProgress, [0.75, 0.79], [0, 250]);
-    const chat2Y = useTransform(scrollYProgress, [0.75, 0.79], [0, 150]);
+    const chat2X = useTransform(smoothProgress, [0.75, 0.79], [0, 250]);
+    const chat2Y = useTransform(smoothProgress, [0.75, 0.79], [0, 150]);
     const chat2Op = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.74, 0.75, 0.78, 0.79],
         [0, 1, 1, 0],
     );
 
     // Step 5: Master Dashboard & Analytics Pipeline
-    const dashScale = useTransform(scrollYProgress, [0.85, 0.95], [0, 1]);
-    const dashY = useTransform(scrollYProgress, [0.85, 0.95], [100, -200]);
-    const pathLength = useTransform(scrollYProgress, [0.8, 0.9], [0, 1]);
+    const dashScale = useTransform(smoothProgress, [0.85, 0.95], [0, 1]);
+    const dashY = useTransform(smoothProgress, [0.85, 0.95], [100, -200]);
+    const pathLength = useTransform(smoothProgress, [0.8, 0.9], [0, 1]);
 
     // Step 5: Data particles
-    const dataParticleY = useTransform(scrollYProgress, [0.9, 1], [0, -300]);
+    const dataParticleY = useTransform(smoothProgress, [0.9, 1], [0, -300]);
     const dataParticleOp = useTransform(
-        scrollYProgress,
+        smoothProgress,
         [0.88, 0.9, 0.98, 1],
         [0, 1, 1, 0],
     );
@@ -220,7 +226,7 @@ const AnimationCanvas = ({
                 style={{ x: waX, y: waY, scale: waScale }}
                 className="absolute z-40"
             >
-                <div className="w-24 h-24 rounded-full bg-whatsapp-green flex items-center justify-center shadow-[0_0_60px_rgba(37,211,102,0.8)] border-4 border-white/20">
+                <div className="w-24 h-24 rounded-full bg-whatsapp-green flex items-center justify-center shadow-[0_0_60px_rgba(37,211,102,0.8)]">
                     <MessageSquare
                         size={48}
                         className="text-black ml-1 mt-1 drop-shadow-md"
@@ -434,7 +440,7 @@ const AnimationCanvas = ({
 
             <motion.div
                 style={{ scale: dashScale, y: dashY }}
-                className="absolute w-[800px] h-[550px] glass-card border-[3px] border-white/50 rounded-[48px] p-12 shadow-2xl z-30 bg-white/90"
+                className="absolute w-[800px] h-[550px] glass-card rounded-[48px] p-12 shadow-2xl z-30 bg-white/95"
             >
                 <div className="flex items-center justify-between border-b-[3px] border-slate-200 pb-8 mb-10">
                     <h3 className="text-3xl font-black text-slate-800 tracking-widest">
@@ -514,45 +520,20 @@ const AnimationCanvas = ({
                     }}
                     className="relative flex flex-col items-center"
                 >
-                    {/* Step 3: Back Thrusters (2 blue lines) */}
-                    <motion.div
-                        style={{ opacity: activeStep === 2 ? 1 : 0 }}
-                        className="absolute -z-10 w-full flex justify-between px-4"
-                    >
-                        <motion.div
-                            animate={{
-                                height: [40, 100, 40],
-                                opacity: [0.5, 0.8, 0.5],
-                            }}
-                            transition={{ repeat: Infinity, duration: 0.1 }}
-                            className="w-1.5 bg-cyan-400 blur-[2px] shadow-[0_0_10px_cyan]"
-                        />
-                        <motion.div
-                            animate={{
-                                height: [40, 100, 40],
-                                opacity: [0.5, 0.8, 0.5],
-                            }}
-                            transition={{
-                                repeat: Infinity,
-                                duration: 0.1,
-                                delay: 0.05,
-                            }}
-                            className="w-1.5 bg-cyan-400 blur-[2px] shadow-[0_0_10px_cyan]"
-                        />
-                    </motion.div>
+                    {/* Step 3: Removed Back Thrusters / Antennas */}
 
-                    {/* Main Round Body */}
+                    {/* Main Square Body / Head */}
                     <motion.div
                         style={{
-                            boxShadow: useMotionTemplate`0 0 50px ${robotGlow}, inset -10px -10px 30px rgba(0,0,0,0.05), inset 10px 10px 30px rgba(255,255,255,1)`,
+                            boxShadow: useMotionTemplate`0 0 80px ${robotGlow}, inset -15px -15px 50px rgba(0,0,0,0.1)`,
                             rotateX: headRotateX,
                             rotateY: headRotateY,
                             transformStyle: "preserve-3d",
                         }}
-                        className="w-40 h-40 rounded-full bg-white border border-slate-200 flex items-center justify-center relative z-20 shadow-2xl overflow-hidden"
+                        className="w-40 h-40 rounded-[40px] bg-slate-800 border border-slate-700 flex items-center justify-center relative z-20 shadow-2xl"
                     >
                         {/* Center Eye / Core */}
-                        <div className="w-20 h-20 bg-slate-900 rounded-full relative shadow-[inset_0_0_20px_rgba(0,0,0,1)] flex items-center justify-center border-4 border-slate-300 overflow-hidden">
+                        <div className="w-28 h-28 bg-slate-950 rounded-[32px] relative shadow-[inset_0_0_40px_rgba(0,0,0,1)] flex items-center justify-center border-4 border-slate-700 overflow-hidden">
                             {/* Pixelated Eye tracking */}
                             <motion.div
                                 style={{
@@ -560,7 +541,7 @@ const AnimationCanvas = ({
                                     y: eyeY,
                                     opacity: isAlive,
                                 }}
-                                className="relative w-12 h-12 flex items-center justify-center"
+                                className="relative w-16 h-16 flex items-center justify-center"
                             >
                                 {/* Blinking Animation Wrapper */}
                                 <motion.div
@@ -570,34 +551,34 @@ const AnimationCanvas = ({
                                         duration: 3,
                                         times: [0, 0.9, 0.95, 0.97, 1],
                                     }}
-                                    className="flex flex-col gap-1"
+                                    className="flex flex-col gap-2"
                                 >
                                     {/* Pixel-like eyes */}
-                                    <div className="flex gap-2">
-                                        <div className="w-4 h-4 bg-whatsapp-green shadow-[0_0_10px_#25D366]" />
-                                        <div className="w-4 h-4 bg-whatsapp-green shadow-[0_0_10px_#25D366]" />
+                                    <div className="flex gap-4">
+                                        <div className="w-5 h-5 bg-cyan-400 shadow-[0_0_20px_#22D3EE] rounded-sm" />
+                                        <div className="w-5 h-5 bg-cyan-400 shadow-[0_0_20px_#22D3EE] rounded-sm" />
                                     </div>
                                 </motion.div>
                             </motion.div>
                         </div>
                         {/* Decorative rings */}
-                        <div className="absolute inset-0 rounded-full border-[5px] border-slate-100 border-dashed opacity-50 block animate-[spin_20s_linear_infinite]" />
+                        <div className="absolute inset-3 rounded-[36px] border-[2px] border-slate-600 border-dashed opacity-10 block animate-[spin_40s_linear_infinite]" />
                     </motion.div>
 
                     {/* Connection Ring */}
-                    <div className="w-16 h-6 bg-slate-200 rounded-full -mt-4 relative z-10 shadow-inner border border-slate-300" />
+                    <div className="w-20 h-5 bg-slate-700 rounded-full -mt-4 relative z-10 shadow-inner" />
 
                     {/* Single Rocket Booster Bottom */}
-                    <div className="w-24 h-16 bg-slate-800 rounded-b-full rounded-t-xl border-x-4 border-b-4 border-slate-700 relative z-0 flex justify-center -mt-2 overflow-hidden shadow-xl">
+                    <div className="w-28 h-20 bg-slate-900 rounded-b-full rounded-t-2xl border-x-4 border-b-4 border-slate-800 relative z-0 flex justify-center -mt-2 overflow-hidden shadow-xl">
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                         {/* Inner engine glow */}
-                        <div className="w-12 h-6 bg-slate-900 mt-auto mb-2 rounded-full shadow-[inset_0_0_10px_#000] border-2 border-slate-600 flex justify-center" />
+                        <div className="w-14 h-8 bg-slate-950 mt-auto mb-3 rounded-full shadow-[inset_0_0_15px_#000] border-2 border-slate-700 flex justify-center" />
                     </div>
 
                     {/* Jetpack Flame */}
                     <motion.div
                         style={{ scale: jetpackScale, opacity: jetpackScale }}
-                        className="absolute top-[200px] flex justify-center -z-10"
+                        className="absolute top-[240px] flex justify-center -z-10"
                     >
                         <motion.div
                             animate={
