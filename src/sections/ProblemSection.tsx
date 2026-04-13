@@ -145,7 +145,7 @@ export function ProblemSection({ containerRef }: { containerRef?: React.RefObjec
               className={cn("transition-all duration-300", stage.get() === 1 ? "text-red-500 drop-shadow-[0_0_15px_rgba(239,68,68,0.8)]" : "text-whatsapp-green")}
               style={{
                 color: useTransform(smoothProgress, [0, 0.74, 0.75, 1], ["#EF4444", "#EF4444", "#25D366", "#25D366"]),
-                textShadow: useTransform(smoothProgress, (v: number) => v < 0.75 ? "0 0 0px rgba(239,68,68,0.8), 0 0 40px rgba(239,68,68,0.4)" : "none")
+                textShadow: useTransform(smoothProgress, (v: number) => v < 0.75 ? "0 0 0px rgba(239,68,68,0.8), 0 0 0px rgba(239,68,68,0.4)" : "none")
               }}
             >
               <motion.span children={textPart2} />

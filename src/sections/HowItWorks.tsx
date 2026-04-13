@@ -1,13 +1,13 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useScroll, useTransform, useMotionValueEvent, useMotionTemplate, useMotionValue, useSpring, type MotionValue } from 'framer-motion';
-import { Link, Brain, Send, Zap, TrendingUp, MessageSquare, Bot, ShoppingBag, Globe, Briefcase, Package, Calendar, MessageCircle, Database } from 'lucide-react';
+import { Link, Brain, Send, Zap, TrendingUp, MessageSquare, Bot, ShoppingBag, Globe, Briefcase, Package, Calendar, MessageCircle, Database, type LucideIcon } from 'lucide-react';
 import { cn } from '../utils/cn';
 
 interface Step {
   id: number;
   title: string;
   description: string;
-  icon: React.ReactNode;
+  icon: LucideIcon;
 }
 
 const STEPS: Step[] = [
@@ -15,31 +15,31 @@ const STEPS: Step[] = [
     id: 1,
     title: "Connect Your WhatsApp",
     description: "Link your Meta Business Manager in minutes. 100% official WhatsApp Cloud API — zero technical knowledge needed.",
-    icon: <Link size={24} />
+    icon: Link
   },
   {
     id: 2,
     title: "Train the AI",
     description: "Upload your product catalog, website URL, or business knowledge. Our AI learns your business deeply in seconds.",
-    icon: <Brain size={24} />
+    icon: Brain
   },
   {
     id: 3,
     title: "Deploy Agent",
     description: "Your AI agent is now live on WhatsApp. It starts greeting customers, qualifying leads, and answering FAQs immediately.",
-    icon: <Send size={24} />
+    icon: Send
   },
   {
     id: 4,
     title: "Automate Everything",
     description: "From booking appointments to processing orders, everything happens automatically in the chat.",
-    icon: <Zap size={24} />
+    icon: Zap
   },
   {
     id: 5,
     title: "Scale Your Business",
     description: "Monitor performance through your dashboard. Reach thousands of customers without adding a single staff member.",
-    icon: <TrendingUp size={24} />
+    icon: TrendingUp
   }
 ];
 
@@ -451,7 +451,7 @@ export function HowItWorks({ containerRef }: { containerRef: React.RefObject<HTM
                   "w-20 h-20 rounded-[24px] flex items-center justify-center mb-8 shadow-sm border transition-all duration-500",
                   activeStep === index ? "bg-whatsapp-green/20 border-whatsapp-green text-whatsapp-green" : "bg-slate-100 border-slate-200 text-slate-600"
                 )}>
-                  {React.cloneElement(step.icon, { size: 40 })}
+                  <step.icon size={40} />
                 </div>
 
                 <div className="flex items-center gap-4 mb-4">

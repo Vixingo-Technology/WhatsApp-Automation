@@ -88,7 +88,7 @@ export default function Page() {
 
             {/* Sections */}
             <Hero containerRef={wrapperRef} />
-            <Blast containerRef={wrapperRef} />
+            {/* <Blast containerRef={wrapperRef} /> */}
             <ProblemSection containerRef={wrapperRef} />
             <HowItWorks containerRef={wrapperRef} />
             <FeaturesSection />
